@@ -29,20 +29,23 @@ var player2 = "Player two"
 //the die(dice) setup, the radom generator 
 //var rolls = 0
 
-var die1 = Math.round(Math.random())
+var die1 = 0
 var die2 = 0
 var die3 = 0
 var die4 = 0
 var result = die1+die2+die3+die4
 console.log("The result for all dice is " + result);
 
+
+//Why wont this work?
 function roll(){
 	var die1 = Math.round(Math.random())
 	var die2 = Math.round(Math.random())
 	var die3 = Math.round(Math.random())
 	var die4 = Math.round(Math.random())
+	var result = (die1+die2+die3+die4)
 }
-die1 = Math.round(Math.random())
+
 roll();
 
 console.log("After randomizing " + result);
@@ -75,52 +78,75 @@ console.log("After randomizing " + result);
 
 alert(boardUi);
 //win condition made
-	var win = "no comment";
-	console.log(win);
-	//players pieces still in game. This is where I'll put in the variables
-	var p1Pieces = [1,2,3];
-	var p2Pieces = [1,2,3];
-	console.log(p1Pieces.length)
-	console.log(p2Pieces.length)
+	var GameOver = "NotYetAssigned";
+	console.log(GameOver);
+	//players pawns still in game. This is where I'll put in the variables
+	var p1Pawns = [1,2,3];
+	var p2Pawns = [1,2,3];
+	console.log(p1Pawns.length)
+	console.log(p2Pawns.length)
 
-//The pieces not yet on the board and not yet off the board.
-	var p1Unplayed = p1Pieces.lenght
-	var p2Unplayed = p2Pieces.lenght
+//The Pawns not yet on the board and not yet off the board.
+	var p1Unplayed = p1Pawns.lenght
+	var p2Unplayed = p2Pawns.lenght
 
-	//Pieces on the board
+	//Pawns on the board
 	var p1InPlay = 0
 	var p2InPlay = 0
-
+	//total amount of active pawn
 	var p1InGame = p1InPlay+p1InGame
 	var p2InGame = p2InPlay+p2InGame
 
-	//Pieces that has been played and ar not in game any more.
-	var p1Played = 0
-	var p2Played = 0
+	/*Pawns that has been played and ar not in game any more. This will be the array that checks how many 
+	Pawns that has been played and left th board. played Pawns will be "pushed" into this array.
+	For now, I'll just have numbers here. 
+	*/
+	var p1PawnOff = [1,2,3,5];
+	var p2PawnOff = [1,2,3,7];
+	console.log("p1s' pans of= "+p1PawnOff+"\np2s' pans of= "+p2PawnOff);
 	
 	
-	//The win condition beeing win = stop, that will be included in the for loop making the game go on.
-	if (p1Played == 3){
-		win = "stop";
+//The win condition beeing "GameOver = isOver", that will be included in the for loop making the game go on.
+function winCheck(){
+	if(p1PawnOff.length == 3){
+		GameOver = "isOver"
 	}
-	else if(p2Played == 3){
-		win = "stop";
+	else if(p2PawnOff.length == 3){
+		GameOver = "isOver"
 	}
 	else{
-		win = "no"
+		GameOver = "notOver"
 	}
+}
 
-for(var play=1;win != "stop"; play){
+
+//The play loop, this is the GAMEPLAY
+for(var play = 1;GameOver != "isOver";play){
 	//Turn order
 	turnOrder();
-
+	//Roll the dice! I want this in a function, but it wont work atm...
+	
+	var die1 = Math.round(Math.random())
+	var die2 = Math.round(Math.random())
+	var die3 = Math.round(Math.random())
+	var die4 = Math.round(Math.random())
+	var result = (die1+die2+die3+die4)
+	
 	roll();
 
 	
 
 	alert("It is currently "+ player +" turn!"); 
+	winCheck();
+	//Status of the game
+	console.log(GameOver)
 }
 
-
+alert("Game Over!");
 
 </script>
+
+
+
+
+
