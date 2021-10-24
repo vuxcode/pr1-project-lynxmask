@@ -1,0 +1,126 @@
+﻿<script>
+
+//These two rows just for development purpose...
+var player1 = "Player one"
+var player2 = "Player two"
+/* hiding this part for the moment so I wont have to go trough with this every test
+//Player set up	
+
+	for(var player1;Boolean(player1)== 0;player1){
+		var player1 = prompt("Enter name of player one");
+	}
+	for(var player2;Boolean(player2)==0;player2){
+		var player2 = prompt("Enter name of player two");
+	}
+*/
+//Turn order made
+	var turn = 0
+	var player = "Not Yet assigned";
+		function turnOrder(){
+			turn ++
+			if(turn % 2 == 0){
+			player = player2
+		}
+		else{
+			player = player1
+		}
+	}
+
+//the die(dice) setup, the radom generator 
+//var rolls = 0
+
+var die1 = Math.round(Math.random())
+var die2 = 0
+var die3 = 0
+var die4 = 0
+var result = die1+die2+die3+die4
+console.log("The result for all dice is " + result);
+
+function roll(){
+	var die1 = Math.round(Math.random())
+	var die2 = Math.round(Math.random())
+	var die3 = Math.round(Math.random())
+	var die4 = Math.round(Math.random())
+}
+die1 = Math.round(Math.random())
+roll();
+
+console.log("After randomizing " + result);
+
+
+//game board
+	//No Square bottom
+	var noSqb = "___";
+	//NoSquare top
+	var noSqt = " ͞ ͞ ͞ ͞ ͞"
+	//empty board square
+	var eSq = "[  ]";
+	//"empty flower empty square"
+	var feSq = "{  }"
+	//Player piece variables, no jokes intended
+	var P1P
+	var P2P
+
+	//the array making up the game board, made on separate lines for easier programming.
+	var board = [
+		[feSq,eSq,eSq,eSq,noSqb,noSqb,feSq,eSq,],
+		[eSq,eSq,eSq,feSq,eSq,eSq,eSq,eSq,],
+		[feSq,eSq,eSq,eSq,noSqt,noSqt,feSq,eSq,]
+	]
+
+	//The UI
+	var boardUi = (board[0]+"\n"+board[1]+"\n"+board[2]);
+
+
+
+alert(boardUi);
+//win condition made
+	var win = "no comment";
+	console.log(win);
+	//players pieces still in game. This is where I'll put in the variables
+	var p1Pieces = [1,2,3];
+	var p2Pieces = [1,2,3];
+	console.log(p1Pieces.length)
+	console.log(p2Pieces.length)
+
+//The pieces not yet on the board and not yet off the board.
+	var p1Unplayed = p1Pieces.lenght
+	var p2Unplayed = p2Pieces.lenght
+
+	//Pieces on the board
+	var p1InPlay = 0
+	var p2InPlay = 0
+
+	var p1InGame = p1InPlay+p1InGame
+	var p2InGame = p2InPlay+p2InGame
+
+	//Pieces that has been played and ar not in game any more.
+	var p1Played = 0
+	var p2Played = 0
+	
+	
+	//The win condition beeing win = stop, that will be included in the for loop making the game go on.
+	if (p1Played == 3){
+		win = "stop";
+	}
+	else if(p2Played == 3){
+		win = "stop";
+	}
+	else{
+		win = "no"
+	}
+
+for(var play=1;win != "stop"; play){
+	//Turn order
+	turnOrder();
+
+	roll();
+
+	
+
+	alert("It is currently "+ player +" turn!"); 
+}
+
+
+
+</script>
