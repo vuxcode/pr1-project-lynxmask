@@ -39,11 +39,11 @@ console.log("The result for all dice is " + result);
 
 //Why wont this work?
 function roll(){
-	var die1 = Math.round(Math.random())
-	var die2 = Math.round(Math.random())
-	var die3 = Math.round(Math.random())
-	var die4 = Math.round(Math.random())
-	var result = (die1+die2+die3+die4)
+	die1 = Math.round(Math.random())
+	die2 = Math.round(Math.random())
+	die3 = Math.round(Math.random())
+	die4 = Math.round(Math.random())
+	result = (die1+die2+die3+die4)
 }
 
 roll();
@@ -126,11 +126,6 @@ for(var play = 1;GameOver != "isOver";play){
 	turnOrder();
 	//Roll the dice! I want this in a function, but it wont work atm...
 	
-	var die1 = Math.round(Math.random())
-	var die2 = Math.round(Math.random())
-	var die3 = Math.round(Math.random())
-	var die4 = Math.round(Math.random())
-	var result = (die1+die2+die3+die4)
 	
 	roll();
 
