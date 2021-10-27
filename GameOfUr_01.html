@@ -74,17 +74,29 @@ function roll(){
 		[feSq,eSq,eSq,eSq,noSqt,noSqt,feSq,eSq,]
 	]
 
-	//The UI
-	var boardUi = (board[0]+"\n"+board[1]+"\n"+board[2]);
-
 //Lets make the first pawn(S)
-var p1Pawn1 = "X₁"
-var p1Pawn2 = "X₂"
-var p1Pawn3 = "X₃"
+	//Player 1 pawn status
+	var p1p1 = "X₁";
+	var p1p2 = "X₂";
+	var p1p3 = "X₃";
+	var p1Unplayed = [p1p1,p1p2,p1p3];
+	var p1Goal = [];
 
-var p1Pawn1 = "O₁"
-var p1Pawn2 = "O₂"
-var p1Pawn3 = "O₃"
+	var p1Goal
+	var p2p1 = "O₁";
+	var p2p2 = "O₂"	;
+	var p2p3 = "O₃";
+	var p2Unplayed = [p2p1,p2p2,p2p3];
+	var p2Goal = [];
+
+
+//The UI
+	var boardUi = (
+		player1+":\nUnplayed Pawns: "+p1Unplayed +"	Pawns in goal:"+p1Goal+" \n\n"+
+		board[0]+"\n"+board[1]+"\n"+board[2]+
+		"\n\n"+player2+":\nUnplayed Pawns: "+p2Unplayed+"		Pawns in goal:"+p2Goal
+	);
+
 
 
 alert(boardUi);
@@ -98,9 +110,8 @@ alert(boardUi);
 	console.log(p2Pawns.length)
 
 //The Pawns not yet on the board and not yet off the board.
-	var p1Unplayed = p1Pawns.lenght
-	var p2Unplayed = p2Pawns.lenght
-
+	
+	
 	//Pawns on the board
 	var p1InPlay = 0
 	var p2InPlay = 0
@@ -112,17 +123,17 @@ alert(boardUi);
 	Pawns that has been played and left th board. played Pawns will be "pushed" into this array.
 	For now, I'll just have numbers here. 
 	*/
-	var p1PawnOff = [1,2,3,5];
-	var p2PawnOff = [1,2,3,7];
-	console.log("p1s' pans of= "+p1PawnOff+"\np2s' pans of= "+p2PawnOff);
+	
+	
+	console.log("p1s' pans of= "+p1Goal+"\np2s' pans of= "+p2Goal);
 	
 	
 //The win condition beeing "GameOver = isOver", that will be included in the for loop making the game go on.
 function winCheck(){
-	if(p1PawnOff.length == 3){
+	if(p1Goal.length == 3){
 		GameOver = "isOver"
 	}
-	else if(p2PawnOff.length == 3){
+	else if(p2Goal.length == 3){
 		GameOver = "isOver"
 	}
 	else{
