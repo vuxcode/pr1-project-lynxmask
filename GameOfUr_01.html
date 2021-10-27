@@ -26,34 +26,57 @@ var player2 = "Player two"
 		}
 	}
 
-//the die(dice) setup, the radom generator 
-//var rolls = 0
-
-var die1 = 0
-var die2 = 0
-var die3 = 0
-var die4 = 0
-var result = die1+die2+die3+die4
-console.log("The result for all dice is " + result);
-
-
-//Why wont this work?
-function roll(){
-	die1 = Math.round(Math.random())
-	console.log("First die rolled "+die1)
-	die2 = Math.round(Math.random())
-	console.log("Second die rolled "+die2)
-	die3 = Math.round(Math.random())
-	console.log("Third die rolled "+die3)
-	die4 = Math.round(Math.random())
-	console.log("Fourth die rolled "+die4)
-	result = (die1+die2+die3+die4)
-	console.log("For a total of "+(die1+die2+die3+die4))
+//the die(dice) setup, and the random generator function
+	var die1 = 0
+	var die2 = 0
+	var die3 = 0
+	var die4 = 0
+	var result = die1+die2+die3+die4
+	function roll(){
+		die1 = Math.round(Math.random())
+		console.log("First die rolled "+die1)
+		die2 = Math.round(Math.random())
+		console.log("Second die rolled "+die2)
+		die3 = Math.round(Math.random())
+		console.log("Third die rolled "+die3)
+		die4 = Math.round(Math.random())
+		console.log("Fourth die rolled "+die4)
+		result = (die1+die2+die3+die4)
+		console.log("For a total of "+(die1+die2+die3+die4))
 }
 
+//Explanation off the rules
+	var rules = "The Rules for 'Game of Ur'!\nTo access the rules again, enter 'rules' on your turn!\n\nEach Player has 3 pawns each.\nThe first player to get all pawns from start to finnish wins!\n\n"+
+		"You each roll 4 dice that can each show a 1 or 0 and you are allowed to move the combined amount.\n"+
+		"That means you can get everything from 0 to 4 steps! All steps need to be taken by one pawn each turn.\n"+
+		"If your pawn land on the same pawn as the other players pawn, that pawn is knocked off the board and has to start from the beginning!\n\n"+
+		player1+" starts at 1 on the top row at 1,2... and goes off the board at ...13,14\n"+
+		player2+" does the same but on the bottom row.\n"+
+		"This means you're not safe on the middle row, i.e square 5 to 12!\n\nThe board:\n"+
+
+		"\n{4}[3][2][1]<-___{14}[13]----->"+player1+" pawns are X₁,X₂...\n"+
+		    "[5][6][7]{8}[9][10][11][12]\n"+
+		    "{4}[3][2][1]<- ͞ ͞ ͞ ͞ ͞{13}[14]----->"+player2+" pawns are O₁,O₂..."
+		//A secondary set of rules that can be used in the background
+	var rules2 = "The Rules for 'Game of Ur'!<br>To access the rules again, enter 'rules' on your turn!<br><br>Each Player has 3 pawns each.<br>The first player to get all pawns from start to finnish wins!<br><br>"+
+		"You each roll 4 dice that can each show a 1 or 0 and you are allowed to move the combined amount.<br>"+
+		"That means you can get everything from 0 to 4 steps! All steps need to be taken by one pawn each turn.<br>"+
+		"If your pawn land on the same pawn as the other players pawn, that pawn is knocked off the board and has to start from the beginning!<br><br>"+
+		player1+" starts at 1 on the top row at 1,2... and goes off the board at ...13,14<br>"+
+		player2+" does the same but on the bottom row.<br>"+
+		"This means you're not safe on the middle row, i.e square 5 to 12!<br><br>The board:<br>"+
+
+		"<br>{4}[3][2][1]<-___{14}[13]----->"+player1+" pawns are X₁,X₂...<br>"+
+		    "[5][6][7]{8}[9][10][11][12]<br>"+
+		    "{4}[3][2][1]<- ͞ ͞ ͞ ͞ ͞{13}[14]----->"+player2+" pawns are O₁,O₂..."
+			 
+
+		
 
 
 
+alert(rules);
+document.write(rules2);
 //game board
 	//No Square bottom
 	var noSqb = "___";
@@ -63,15 +86,17 @@ function roll(){
 	var eSq = "[  ]";
 	//"empty flower empty square"
 	var feSq = "{  }"
+	var startSq = "<-"
+
 	//Player piece variables, no jokes intended
 	var P1P
 	var P2P
 
 	//the array making up the game board, made on separate lines for easier programming.
 	var board = [
-		[feSq,eSq,eSq,eSq,noSqb,noSqb,feSq,eSq,],
+		[feSq,eSq,eSq,eSq,startSq,noSqb,feSq,eSq,],
 		[eSq,eSq,eSq,feSq,eSq,eSq,eSq,eSq,],
-		[feSq,eSq,eSq,eSq,noSqt,noSqt,feSq,eSq,]
+		[feSq,eSq,eSq,eSq,startSq,noSqt,feSq,eSq,]
 	]
 
 //Lets make the first pawn(S)
@@ -144,19 +169,19 @@ function winCheck(){
 
 //The play loop, this is the GAMEPLAY
 for(var play = 1;GameOver != "isOver";play){
+	//Dediding who's turn it is 
+	turnOrder();
 	//Telling the player whos turn it is.
 	alert("It is currently "+ player +" turn!\n Pres 'OK' to roll the Dice!");
 	//Re-rolling the dice to be used to make the move.
 	roll();
-	//Turn order
-	turnOrder();
+	
 	
 	
 	
 
 	
-	//Switching whos turn it is.
-	turnOrder();
+
 	
 	winCheck();
 	//Status of the game
