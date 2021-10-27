@@ -40,15 +40,18 @@ console.log("The result for all dice is " + result);
 //Why wont this work?
 function roll(){
 	die1 = Math.round(Math.random())
+	console.log("First die rolled "+die1)
 	die2 = Math.round(Math.random())
+	console.log("Second die rolled "+die2)
 	die3 = Math.round(Math.random())
+	console.log("Third die rolled "+die3)
 	die4 = Math.round(Math.random())
+	console.log("Fourth die rolled "+die4)
 	result = (die1+die2+die3+die4)
+	console.log("For a total of "+(die1+die2+die3+die4))
 }
 
-roll();
 
-console.log("After randomizing " + result);
 
 
 //game board
@@ -74,6 +77,14 @@ console.log("After randomizing " + result);
 	//The UI
 	var boardUi = (board[0]+"\n"+board[1]+"\n"+board[2]);
 
+//Lets make the first pawn(S)
+var p1Pawn1 = "X₁"
+var p1Pawn2 = "X₂"
+var p1Pawn3 = "X₃"
+
+var p1Pawn1 = "O₁"
+var p1Pawn2 = "O₂"
+var p1Pawn3 = "O₃"
 
 
 alert(boardUi);
@@ -122,16 +133,20 @@ function winCheck(){
 
 //The play loop, this is the GAMEPLAY
 for(var play = 1;GameOver != "isOver";play){
+	//Telling the player whos turn it is.
+	alert("It is currently "+ player +" turn!\n Pres 'OK' to roll the Dice!");
+	//Re-rolling the dice to be used to make the move.
+	roll();
 	//Turn order
 	turnOrder();
-	//Roll the dice! I want this in a function, but it wont work atm...
 	
 	
-	roll();
-
 	
 
-	alert("It is currently "+ player +" turn!"); 
+	
+	//Switching whos turn it is.
+	turnOrder();
+	
 	winCheck();
 	//Status of the game
 	console.log(GameOver)
