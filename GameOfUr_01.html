@@ -44,7 +44,7 @@ var player2 = "Player two"
 		result = (die1+die2+die3+die4)
 		console.log("For a total of "+(die1+die2+die3+die4))
 }
-
+//No code in this part. Just rules
 //Explanation off the rules
 	var rules = "The Rules for 'Game of Ur'!\nTo access the rules again, enter 'rules' on your turn!\n\nEach Player has 3 pawns each.\nThe first player to get all pawns from start to finnish wins!\n\n"+
 		"You each roll 4 dice that can each show a 1 or 0 and you are allowed to move the combined amount.\n"+
@@ -106,14 +106,23 @@ document.write(rules2);
 	var p1p3 = "X₃";
 	var p1Unplayed = [p1p1,p1p2,p1p3];
 	var p1Goal = [];
-
+	//player 2 pawn status
 	var p1Goal
 	var p2p1 = "O₁";
 	var p2p2 = "O₂"	;
 	var p2p3 = "O₃";
 	var p2Unplayed = [p2p1,p2p2,p2p3];
 	var p2Goal = [];
+	//Array deciding players pawn location. Each one corresponding a player pawn.
+	//PawnLoc[0] beeing player 1 pawn 1. PawnLoc[1] beeing player 1 pawn 2 and so on.
+	var PawnLoc = [0,0,0,0,0,0];
 
+
+
+
+
+//Lets make the pawn go forward
+	
 
 //The UI
 	var boardUi = (
@@ -176,7 +185,15 @@ for(var play = 1;GameOver != "isOver";play){
 	//Re-rolling the dice to be used to make the move.
 	roll();
 	
-	
+	if (player == player1 && p1Unplayed.lenght == 3){
+		
+	}
+
+
+	if (result == 0){
+		alert(player+" rolled "+ result+"...Next players turn.");
+	}
+	prompt(player+" rolled "+ result+"! What pawn do you want to move?");
 	
 	
 
