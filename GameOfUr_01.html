@@ -104,24 +104,29 @@ document.write(rules2);
 	var p1p1 = "X₁";
 	var p1p2 = "X₂";
 	var p1p3 = "X₃";
+	//Panws not yet played
 	var p1Unplayed = [p1p1,p1p2,p1p3];
+	//Pawns on the board
+	var p1Playing = [];
+	//Pawns that has entered goal.
 	var p1Goal = [];
+
 	//player 2 pawn status
 	var p1Goal
 	var p2p1 = "O₁";
 	var p2p2 = "O₂"	;
 	var p2p3 = "O₃";
 	var p2Unplayed = [p2p1,p2p2,p2p3];
+	var p2Playing = [];
 	var p2Goal = [];
-	//Array deciding players pawn location. Each one corresponding a player pawn.
+	//Array deciding players pawn location. Each one corresponding a player pawn. pawnLoc for pawnLocation
 	//PawnLoc[0] beeing player 1 pawn 1. PawnLoc[1] beeing player 1 pawn 2 and so on.
-	var PawnLoc = [0,0,0,0,0,0];
+	var pawnLoc = [0,0,0,0,0,0];
+	
 
 
 
 
-
-//Lets make the pawn go forward
 	
 
 //The UI
@@ -134,14 +139,11 @@ document.write(rules2);
 
 
 alert(boardUi);
-//win condition made
-	var GameOver = "NotYetAssigned";
-	console.log(GameOver);
-	//players pawns still in game. This is where I'll put in the variables
-	var p1Pawns = [1,2,3];
-	var p2Pawns = [1,2,3];
-	console.log(p1Pawns.length)
-	console.log(p2Pawns.length)
+//variable for win condition made
+	//var GameOver = "NotYetAssigned";
+	//console.log(GameOver);
+	console.log(p1Playing.length)
+	console.log(p2Playing.length)
 
 //The Pawns not yet on the board and not yet off the board.
 	
@@ -177,26 +179,37 @@ function winCheck(){
 
 
 //The play loop, this is the GAMEPLAY
-for(var play = 1;GameOver != "isOver";play){
+for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	//Dediding who's turn it is 
 	turnOrder();
 	//Telling the player whos turn it is.
 	alert("It is currently "+ player +" turn!\n Pres 'OK' to roll the Dice!");
 	//Re-rolling the dice to be used to make the move.
 	roll();
-	
-	if (player == player1 && p1Unplayed.lenght == 3){
-		
-	}
+	//if the current player has no pawns on the board, they cant choose what pawn to play.
+	//atm it'll only show a placeholder message.
+
+
+
+
 
 
 	if (result == 0){
+		//If the player rolls 0, they cant do anything and it is the next players turn.
 		alert(player+" rolled "+ result+"...Next players turn.");
 	}
-	prompt(player+" rolled "+ result+"! What pawn do you want to move?");
-	
-	
-
+	else{
+		//Check if the current player got any pawns on the board at all.
+		if (player == player1 && p1Unplayed.length == 3){
+				pawnLoc[0] += result
+		}
+		else if(player == player2 && p2Unplayed.length == 3){
+			pawnLoc[3] += result
+		}
+		else {
+			prompt(player+" rolled "+ result+"! What pawn do you want to move?\nTo see rules, enter 'r' or write 'rules'.\n\n"+boardUi)
+		}
+	}
 	
 
 	
