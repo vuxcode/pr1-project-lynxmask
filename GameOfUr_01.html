@@ -129,17 +129,20 @@ document.write(rules2);
 
 
 //Function for PICKING a pawn to move1
+// NEED ADD! If the pawn is past square 20!!!!What happense then!! Neet to check that.
+//Something is making infiloop!
 function movePawn(){
-	currentPawn = prompt(player +" PickPawn to move "+result+" steps!");
+	
 	for(var move = "stay";move != "move";move){
-		
+		//User(hopefully) picks a pawn.
+		currentPawn = prompt(player +" PickPawn to move "+result+" steps!");
 		//If the player doesn't pick a pawn.
 		if (Boolean(currentPawn) == false){
-			currentPawn = prompt("Please pick a pawn!(ง •̀_•́)ง\nto move "+result+" steps!");
+			alert("Please pick a pawn!(ง •̀_•́)ง");
 		}
 		//If the player choose a pawn above how many pawns she/he has. Chose to make it pawnLoc.lenth/2 in case I add more pawns later on.
 		else if (currentPawn > pawnLoc.length/2){
-			currentPawn = prompt("You dont have "+currentPawn+" pawns...\nPick another pawn!\nYou'll move "+result+" steps!");
+			alert("You dont have "+currentPawn+" pawns...");
 		}
 		else if(player == player1){
 			//Check what player chose, and if it isn't in goal already, and change move to be equal to "move" for loop to stop.
@@ -147,27 +150,33 @@ function movePawn(){
 				pawnLoc[0] += result
 				move = "move"
 			}
-			else if(currentPawn == 2 && pawnLoc[0]<21){
+			else if(currentPawn == 2 && pawnLoc[1]<21){
 				pawnLoc[1] += result
 				move = "move"
 			}
-			else if(currentPawn == 3 && pawnLoc < 21){
+			else if(currentPawn == 3 && pawnLoc[2] < 21){
 				pawnLoc[2] += result
 				move = "move"
 			}
+			else{
+				alert("This pawn has already entered the goal and cant be played anymore!");
+			}
 		}
 		else{//player == player2
-			if(currentPawn == 1){
+			if(currentPawn == 1 && pawnLoc[3] < 21){
 				pawnLoc[3] += result
 				move = "move"
 			}
-			else if(currentPawn == 2){
+			else if(currentPawn == 2 && pawnLoc[4] < 21){
 				pawnLoc[4]+=result
 				move = "move"
 			}
-			else if(currentPawn == 3){
+			else if(currentPawn == 3 && pawnLoc[5] < 21){
 				pawnLoc[5]+=result
 				move = "move"
+			}
+			else{
+				alert("This pawn has already entered the goal and cant be played anymore!");
 			}
 		}
 		console.log(pawnLoc)
