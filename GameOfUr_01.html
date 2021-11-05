@@ -123,51 +123,61 @@ document.write(rules2);
 	//PawnLoc[0] beeing player 1 pawn 1. PawnLoc[1] beeing player 1 pawn 2 and so on.
 	var pawnLoc = [0,0,0,0,0,0];
 	var currentPawn = 0
-	
-function PickPawn(){
-	if(player == player1){
-		if(currentPawn == 1 && pawnLoc[0] > 0 && pawnLoc[0] < 20){
-			pawnLoc[0]+= result
-		}
-		else if(currentPawn == 2 && pawnLoc[1]>0 && pawnLoc[1] < 20){
-			pawnLoc[1]+= result
-		}
-		else if(currentPawn == 3 && pawnLoc[2]>0 && pawnLoc[2] < 20){
-			pawnLoc[2]+= result
-		}
-	}
-	else{//player == player2
+	var shiftPawn = 0
 
-	}
-}
+	console.log(pawnLoc.length/2);
 
-//A function for moving pawns
+
+//Function for PICKING a pawn to move1
 function movePawn(){
-
-	if(player == player1){
-		if(currentPawn == 1){
-			pawnLoc[0] += result
+	currentPawn = prompt(player +" PickPawn to move "+result+" steps!");
+	for(var move = "stay";move != "move";move){
+		
+		//If the player doesn't pick a pawn.
+		if (Boolean(currentPawn) == false){
+			currentPawn = prompt("Please pick a pawn!(ง •̀_•́)ง\nto move "+result+" steps!");
 		}
-		else if(currentPawn == 2){
-			pawnLoc[1] += result
+		//If the player choose a pawn above how many pawns she/he has. Chose to make it pawnLoc.lenth/2 in case I add more pawns later on.
+		else if (currentPawn > pawnLoc.length/2){
+			currentPawn = prompt("You dont have "+currentPawn+" pawns...\nPick another pawn!\nYou'll move "+result+" steps!");
 		}
-		else if(currentPawn == 3){
-			pawnLoc[2] += result
+		else if(player == player1){
+			//Check what player chose, and if it isn't in goal already, and change move to be equal to "move" for loop to stop.
+			if(currentPawn == 1 && pawnLoc[0] < 21){
+				pawnLoc[0] += result
+				move = "move"
+			}
+			else if(currentPawn == 2 && pawnLoc[0]<21){
+				pawnLoc[1] += result
+				move = "move"
+			}
+			else if(currentPawn == 3 && pawnLoc < 21){
+				pawnLoc[2] += result
+				move = "move"
+			}
 		}
+		else{//player == player2
+			if(currentPawn == 1){
+				pawnLoc[3] += result
+				move = "move"
+			}
+			else if(currentPawn == 2){
+				pawnLoc[4]+=result
+				move = "move"
+			}
+			else if(currentPawn == 3){
+				pawnLoc[5]+=result
+				move = "move"
+			}
+		}
+		console.log(pawnLoc)
 	}
-	else{//player == player2
-		if(currentPawn == 1){
-			pawnLoc[3] += result
-		}
-		else if(currentPawn == 2){
-			pawnLoc[4]+=result
-		}
-		else if(currentPawn == 3){
-			pawnLoc[5]+=result
-		}
-	}
+	//resetting the variables for the next turn user picks it.
+	move = "stay"
+	currentPawn = 0
 }
-	
+
+
 
 //The UI
 	var boardUi = (
@@ -234,32 +244,10 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 		//If player rolls a 0, no move can be made, and it is the next players turn to roll
 		alert(player + " rolled a 0 and cant move on this turn...Better luck next time!");
 	}
-	//If the player hasn't made a move yet, they can't decide what pawn to move.
-	else if(player == player1){
-		if(p1Unplayed.length == 3){
-			pawnLoc[0]+= result
-		}
-		else if(p1InPlay.length == 1){
-
-		}
-		else if(p1InPlay.length > 1){
-
-		}
+		//Otherwise, pick a pawn and move!
+	else{
+		movePawn();
 	}
-	else if(player == player2){
-		if(p2Unplayed.length == 3){
-			pawnLoc[3]+= result
-		}
-		else if(p2InPlay.length == 1){
-
-		}
-		else if(p2InPlay.length > 1){
-
-		}
-	}
-	
-
-	movePawn();
 	
 	winCheck();
 	//Status of the game
