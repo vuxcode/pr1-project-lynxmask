@@ -15,14 +15,18 @@ var player2 = "Player two"
 */
 //Turn order made
 	var turn = 0
+	//order can be used as a variable for variables to get a number correlating to a player
+	var order = 0
 	var player = "Not Yet assigned";
 		function turnOrder(){
 			turn ++
 			if(turn % 2 == 0){
 				player = player2
+				order = 1
 			}
 			else{
 				player = player1
+				order = 2
 			}
 		}
 
@@ -112,20 +116,24 @@ document.write(rules2);
 	var p1Goal = [];
 
 	//player 2 pawn status
-	var p1Goal
+	
 	var p2p1 = "O₁";
 	var p2p2 = "O₂"	;
 	var p2p3 = "O₃";
 	var p2Unplayed = [p2p1,p2p2,p2p3];
 	var p2Playing = [];
 	var p2Goal = [];
-	//Array deciding players pawn location. Each one corresponding a player pawn. pawnLoc for pawnLocation
-	//PawnLoc[0] beeing player 1 pawn 1. PawnLoc[1] beeing player 1 pawn 2 and so on.
-	var pawnLoc = [0,0,0,0,0,0];
+	/*
+	Array deciding players pawn location. Each one corresponding a player pawn. pawnLoc for pawnLocation
+	PawnLoc[0] beeing player 1 pawn 1. PawnLoc[1] beeing player 1 pawn 2 and so on.
+	Make 2 arrays one for each player. So that I can compare arrays, and increase the number of pawns.
+	*/
+	var pawnLoc1 = [0,0,0];
+	var pawnLoc2 = [0,0,0];
 	var currentPawn = 0
 	var shiftPawn = 0
 
-	console.log(pawnLoc.length/2);
+	
 
 
 //Function for PICKING a pawn to move1
@@ -141,21 +149,21 @@ function movePawn(){
 			alert("Please pick a pawn!(ง •̀_•́)ง");
 		}
 		//If the player choose a pawn above how many pawns she/he has. Chose to make it pawnLoc.lenth/2 in case I add more pawns later on.
-		else if (currentPawn > pawnLoc.length/2){
+		else if (currentPawn > pawnLoc1.length){
 			alert("You dont have "+currentPawn+" pawns...");
 		}
 		else if(player == player1){
 			//Check what player chose, and if it isn't in goal already, and change move to be equal to "move" for loop to stop.
-			if(currentPawn == 1 && pawnLoc[0] < 21){
+			if(currentPawn == 1 && pawnLoc1[0] < 14){
 				pawnLoc[0] += result
 				move = "move"
 			}
-			else if(currentPawn == 2 && pawnLoc[1]<21){
-				pawnLoc[1] += result
+			else if(currentPawn == 2 && pawnLoc1[1] < 14){
+				pawnLoc1[1] += result
 				move = "move"
 			}
-			else if(currentPawn == 3 && pawnLoc[2] < 21){
-				pawnLoc[2] += result
+			else if(currentPawn == 3 && pawnLoc1[2] < 14){
+				pawnLoc1[2] += result
 				move = "move"
 			}
 			else{
@@ -163,23 +171,24 @@ function movePawn(){
 			}
 		}
 		else{//player == player2
-			if(currentPawn == 1 && pawnLoc[3] < 21){
-				pawnLoc[3] += result
+			if(currentPawn == 1 && pawnLoc2[0] < 14){
+				pawnLoc2[0] += result
 				move = "move"
 			}
-			else if(currentPawn == 2 && pawnLoc[4] < 21){
-				pawnLoc[4]+=result
+			else if(currentPawn == 2 && pawnLoc2[1] < 14){
+				pawnLoc2[1]+=result
 				move = "move"
 			}
-			else if(currentPawn == 3 && pawnLoc[5] < 21){
-				pawnLoc[5]+=result
+			else if(currentPawn == 3 && pawnLoc2[2] < 14){
+				pawnLoc2[2]+=result
 				move = "move"
 			}
 			else{
 				alert("This pawn has already entered the goal and cant be played anymore!");
 			}
 		}
-		console.log(pawnLoc)
+		console.log("Player one array " + pawnLoc1);
+		console.log("Player two array " + pawnLoc2);
 	}
 	//resetting the variables for the next turn user picks it.
 	move = "stay"
@@ -225,16 +234,15 @@ alert(boardUi);
 	
 //The WIN CONDITION beeing "GameOver = isOver", that will be included in the for loop making the game go on.
 function winCheck(){
-	if(p1Goal.length == 3){
-		GameOver = "isOver"
-	}
-	else if(p2Goal.length == 3){
+	if((p1Goal.length || p2Goal.length) == pawnLoc1.length){
 		GameOver = "isOver"
 	}
 	else{
 		GameOver = "notOver"
 	}
 }
+
+
 
 
 //The play loop, this is the GAMEPLAY
