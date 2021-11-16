@@ -92,10 +92,6 @@ document.write(rules2);
 	var feSq = "{  }"
 	var startSq = "<-"
 
-	//Player piece variables, no jokes intended
-	var P1P
-	var P2P
-
 	//the array making up the game board, made on separate lines for easier programming.
 	var board = [
 		[feSq,eSq,eSq,eSq,startSq,noSqb,feSq,eSq,],
@@ -133,21 +129,21 @@ document.write(rules2);
 	var currentPawn = 0
 	var shiftPawn = 0
 
-//check if there
-/*
-function target(){
-	if (player == player1){
-		if()
-	}
-	else{//player == player2
+
+//Hopefully it'll be easier to iterate having a separate function to check if a move is valid or not.
+function validMove(){
+	if(player == player1){
 		
 	}
-}
-*/
+	else{//player == player2
 
-//Function for PICKING a pawn to move1
-// NEED ADD! If the pawn is past square 20!!!!What happense then!! Neet to check that.
-//Something is making infiloop!
+	}
+}
+
+function test(){
+	console.log("The test result is " +(pawnLoc1[currentPawn - 1]+ result));
+}
+//Function for PICKING a pawn to move
 function movePawn(){
 	
 	for(var move = "stay";move != "move";move){
@@ -161,9 +157,10 @@ function movePawn(){
 		else if (currentPawn > pawnLoc1.length){
 			alert("You dont have "+currentPawn+" pawns...");
 		}
+		//validMove function will go here instead of all this crap.
 		else if(player == player1){
 			//Check what player chose, and if it isn't in goal already, and change move to be equal to "move" for loop to stop.
-			if(pawnLoc1[(currentPawn - 1)] <= 15){
+			if(pawnLoc1[(currentPawn - 1)] <= 14){
 				pawnLoc1[(currentPawn-1)] += result
 				move = "move"
 			}
@@ -172,7 +169,7 @@ function movePawn(){
 			}
 		}
 		else{//player == player2
-			if(pawnLoc2[(currentPawn - 1)] <= 15){
+			if(pawnLoc2[(currentPawn - 1)] <= 14){
 				pawnLoc2[(currentPawn-1)] += result
 				move = "move"
 			}
@@ -180,9 +177,10 @@ function movePawn(){
 				alert("This pawn has already entered the goal and cant be played anymore!");
 			}
 		}
-		console.log("Player one array " + pawnLoc1);
-		console.log("Player two array " + pawnLoc2);
+		
 	}
+	console.log("Player one array " + pawnLoc1);
+	console.log("Player two array " + pawnLoc2);
 	//resetting the variables for the next turn user picks it.
 	move = "stay"
 	currentPawn = 0
@@ -228,8 +226,7 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	alert("It is currently "+ player +" turn!\n Pres 'OK' to roll the Dice!\n\n"+boardUi);
 	//Re-rolling the dice to be used to make the move.
 	roll();
-	//if the current player has no pawns on the board, they cant choose what pawn to play.
-	//atm it'll only show a placeholder message.
+
 
 
 	if(result == 0){
@@ -240,7 +237,9 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	else{
 		movePawn();
 	}
-	
+	//Check if pawns are in goal
+	//pawnAt();
+
 	winCheck();
 	//Status of the game
 	console.log(GameOver)
