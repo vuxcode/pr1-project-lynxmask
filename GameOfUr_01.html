@@ -133,8 +133,17 @@ document.write(rules2);
 	var currentPawn = 0
 	var shiftPawn = 0
 
-	
-
+//check if there
+/*
+function target(){
+	if (player == player1){
+		if()
+	}
+	else{//player == player2
+		
+	}
+}
+*/
 
 //Function for PICKING a pawn to move1
 // NEED ADD! If the pawn is past square 20!!!!What happense then!! Neet to check that.
@@ -143,44 +152,28 @@ function movePawn(){
 	
 	for(var move = "stay";move != "move";move){
 		//User(hopefully) picks a pawn.
-		currentPawn = prompt(player +" PickPawn to move "+result+" steps!");
+		currentPawn = prompt(player +", pick a pawn to move "+result+" steps!");
 		//If the player doesn't pick a pawn.
 		if (Boolean(currentPawn) == false){
 			alert("Please pick a pawn!(ง •̀_•́)ง");
 		}
-		//If the player choose a pawn above how many pawns she/he has. Chose to make it pawnLoc.lenth/2 in case I add more pawns later on.
+		//If the player choose a pawn above how many pawns the player has. Chose to make it pawnLoc1.length in case I add more pawns later on. I use pawnLoc1, but both players should have sama amount of pawns
 		else if (currentPawn > pawnLoc1.length){
 			alert("You dont have "+currentPawn+" pawns...");
 		}
 		else if(player == player1){
 			//Check what player chose, and if it isn't in goal already, and change move to be equal to "move" for loop to stop.
-			if(currentPawn == 1 && pawnLoc1[0] < 14){
-				pawnLoc[0] += result
-				move = "move"
-			}
-			else if(currentPawn == 2 && pawnLoc1[1] < 14){
-				pawnLoc1[1] += result
-				move = "move"
-			}
-			else if(currentPawn == 3 && pawnLoc1[2] < 14){
-				pawnLoc1[2] += result
+			if(pawnLoc1[(currentPawn - 1)] <= 15){
+				pawnLoc1[(currentPawn-1)] += result
 				move = "move"
 			}
 			else{
-				alert("This pawn has already entered the goal and cant be played anymore!");
+				alert("ThisPawn has already entered the goal and cant be played any more!");
 			}
 		}
 		else{//player == player2
-			if(currentPawn == 1 && pawnLoc2[0] < 14){
-				pawnLoc2[0] += result
-				move = "move"
-			}
-			else if(currentPawn == 2 && pawnLoc2[1] < 14){
-				pawnLoc2[1]+=result
-				move = "move"
-			}
-			else if(currentPawn == 3 && pawnLoc2[2] < 14){
-				pawnLoc2[2]+=result
+			if(pawnLoc2[(currentPawn - 1)] <= 15){
+				pawnLoc2[(currentPawn-1)] += result
 				move = "move"
 			}
 			else{
@@ -213,24 +206,6 @@ alert(boardUi);
 	console.log(p1Playing.length)
 	console.log(p2Playing.length)
 
-//The Pawns not yet on the board and not yet off the board.
-	
-	
-	//Pawns on the board
-	var p1InPlay = 0
-	var p2InPlay = 0
-	//total amount of active pawn
-	var p1InGame = p1InPlay+p1InGame
-	var p2InGame = p2InPlay+p2InGame
-
-	/*Pawns that has been played and ar not in game any more. This will be the array that checks how many 
-	Pawns that has been played and left th board. played Pawns will be "pushed" into this array.
-	For now, I'll just have numbers here. 
-	*/
-	
-	
-	console.log("p1s' pans of= "+p1Goal+"\np2s' pans of= "+p2Goal);
-	
 	
 //The WIN CONDITION beeing "GameOver = isOver", that will be included in the for loop making the game go on.
 function winCheck(){
