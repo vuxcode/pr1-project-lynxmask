@@ -24,11 +24,11 @@ var move = "stay"
 			turn ++
 			if(turn % 2 == 0){
 				player = player2
-				order = 1
+				order = 0
 			}
 			else{
 				player = player1
-				order = 2
+				order = 1
 			}
 		}
 
@@ -94,12 +94,6 @@ document.write(rules2);
 	var feSq = "{  }"
 	var startSq = "<-"
 
-	//the array making up the game board, made on separate lines for easier programming.
-	var board = [
-		[feSq,eSq,eSq,eSq,startSq,noSqb,feSq,eSq,],
-		[eSq,eSq,eSq,feSq,eSq,eSq,eSq,eSq,],
-		[feSq,eSq,eSq,eSq,startSq,noSqt,feSq,eSq,]
-	]
 
 //Lets make the first pawn(S)
 	//Player 1 pawn status
@@ -134,8 +128,24 @@ document.write(rules2);
 	var pawnLoc2 = [0,0,0];
 	var currentPawn = 0
 
+//the array making up the game board, made on separate lines for easier programming.
+var board = [
+	[feSq,eSq,eSq,eSq,startSq,noSqb,feSq,eSq,],
+	[eSq,eSq,eSq,feSq,eSq,eSq,eSq,eSq,],
+	[feSq,eSq,eSq,eSq,startSq,noSqt,feSq,eSq,]
+]
+//delete this...maby
+var Board2 = [eSq,eSq,eSq,feSq,eSq,eSq,eSq,feSq,eSq,eSq,eSq,eSq,eSq,feSq,]
 
-//Function to get the pawn UI depending on user choise
+//The UI
+var boardUi = (
+	player1+":\nUnplayed Pawns: "+p1Unplayed +"	Pawns in goal:"+p1Goal+" \n\n"+
+	board[0]+"\n"+board[1]+"\n"+board[2]+
+	"\n\n"+player2+":\nUnplayed Pawns: "+p2Unplayed+"		Pawns in goal:"+p2Goal
+);
+
+
+//Function to get the pawn UI depending on user choise. And I get to try the return function! ¯\_(ツ)_/¯
 function getPawn(pawnUI){
 	if(player == player1){
 		return p1Pawns[(currentPawn - 1)]
@@ -145,17 +155,57 @@ function getPawn(pawnUI){
 	}
 }
 
+//Function to fin the square to replace with pawn UI.
+function findSquare(SqUI){
+	var row = 0
+	for(var col = 0; col != 7 && row !=3; col ++){
+		if(col ==7){
+			row ++
+			col == 0
+		}
+	col++
+	console.log(board[0][1]);
+	}
+
+
+return sqUI
+}
+
+
+
+function updUI(){
+
+	if(player == player1){
+		//These are the safe squares(for player1) and cant be accessed by player 2
+		if(pawnLoc1[(currentPawn-1)] <=4){
+			
+		}
+		//I Chose to have the program se if the value is mor or equal to 13 here and not 5-13, because then I'd have to check 2 conditions instead of one.
+		else if(pawnLoc1[(currentPawn-1)] >= 13){
+			board[1][(currentPawn-1)] = getPawn(pawnLoc1[(currentPawn-1)]);
+		}
+		//The else here will be square 5 to 12
+		else{
+			
+		}
+	}
+	else{//player ==player2
+		if(pawnLoc2[(currentPawn-1)] <=4){
+
+		}
+		else if(pawnLoc2 >=13){
+			board[1][(currentPawn-1)] = getPawn(pawnLoc1[(currentPawn-1)]);
+		}
+		else{
+
+		}
+	}
+}
+
+
 //feedback to invalid moves for the player
 var goalMsg = "This pawn has already entered goal and cant pe moved any more!\n" + player + ", please pick another pawn!";
 var occupiedMsg = "This square is already occupied by one of your pawns!\n "+ player +", please pick another pawn!";
-
-
-//The UI
-	var boardUi = (
-		player1+":\nUnplayed Pawns: "+p1Unplayed +"	Pawns in goal:"+p1Goal+" \n\n"+
-		board[0]+"\n"+board[1]+"\n"+board[2]+
-		"\n\n"+player2+":\nUnplayed Pawns: "+p2Unplayed+"		Pawns in goal:"+p2Goal
-	);
 
 
 //Function to validate and execute the players move.  validates if the pawn is in play and not trying to move to an occupied square.
@@ -240,7 +290,7 @@ alert(boardUi);
 
 
 
-//The play loop, this is the GAMEPLAY
+//The play loop, this is the GAMEPLAY GAMEPLAY GAMEPLAY GAMEPLAY!!!
 for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	//Dediding who's turn it is 
 	turnOrder();
@@ -259,9 +309,10 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	else{
 		movePawn();
 	}
-	//Check if pawns are in goal
-	//pawnAt();
 
+	//Update UI
+	updUI();
+	//Check if pawns are in goal
 	winCheck();
 	//Status of the game
 	console.log(GameOver)
