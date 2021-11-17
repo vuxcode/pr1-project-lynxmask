@@ -103,9 +103,12 @@ document.write(rules2);
 
 //Lets make the first pawn(S)
 	//Player 1 pawn status
+
 	var p1p1 = "X₁";
 	var p1p2 = "X₂";
 	var p1p3 = "X₃";
+	//Putting the pawn "graphics" into an array
+	var p1Pawns = ["[X₁]","[X₂]","[X₃]"];
 	//Panws not yet played
 	var p1Unplayed = [p1p1,p1p2,p1p3];
 	//Pawns on the board
@@ -118,6 +121,7 @@ document.write(rules2);
 	var p2p1 = "O₁";
 	var p2p2 = "O₂"	;
 	var p2p3 = "O₃";
+	var p2Pawns = ["[O₁]","[O₂]","[O₃]"];
 	var p2Unplayed = [p2p1,p2p2,p2p3];
 	var p2Playing = [];
 	var p2Goal = [];
@@ -130,12 +134,31 @@ document.write(rules2);
 	var pawnLoc2 = [0,0,0];
 	var currentPawn = 0
 
+
+//Function to get the pawn UI depending on user choise
+function getPawn(pawnUI){
+	if(player == player1){
+		return p1Pawns[(currentPawn - 1)]
+	}
+	else{//player == player2
+		return p2Pawns[(currentPawn - 1)]
+	}
+}
+
 //feedback to invalid moves for the player
 var goalMsg = "This pawn has already entered goal and cant pe moved any more!\n" + player + ", please pick another pawn!";
 var occupiedMsg = "This square is already occupied by one of your pawns!\n "+ player +", please pick another pawn!";
 
 
-//Hopefully it'll be easier to iterate having a separate function to check if a move is valid or not.
+//The UI
+	var boardUi = (
+		player1+":\nUnplayed Pawns: "+p1Unplayed +"	Pawns in goal:"+p1Goal+" \n\n"+
+		board[0]+"\n"+board[1]+"\n"+board[2]+
+		"\n\n"+player2+":\nUnplayed Pawns: "+p2Unplayed+"		Pawns in goal:"+p2Goal
+	);
+
+
+//Function to validate and execute the players move.  validates if the pawn is in play and not trying to move to an occupied square.
 function validateMove(){
 	//player ones validation
 	console.log("CurrentPawn is " + currentPawn);
@@ -168,15 +191,12 @@ function validateMove(){
 	}
 }
 
-
-//Function for PICKING a pawn to move
-
-
+//Further validation and move function.
 function movePawn(){
 	
 	for(move ;move != "move";move){
 		//User(hopefully) picks a pawn. 
-		currentPawn = parseInt(prompt(player +" rolled "+ result+"!\nPlease pick a pawn to move "+result+" steps!"));
+		currentPawn = parseInt(prompt(player +" rolled "+ result+"!\nPlease pick a pawn to move "+result+" steps!\n\n"+boardUi));
 		//If the player doesn't pick a pawn.
 		if (Boolean(currentPawn) == false){
 			alert("Please pick a pawn!(ง •̀_•́)ง");
@@ -199,23 +219,8 @@ function movePawn(){
 
 
 
-//The UI
-	var boardUi = (
-		player1+":\nUnplayed Pawns: "+p1Unplayed +"	Pawns in goal:"+p1Goal+" \n\n"+
-		board[0]+"\n"+board[1]+"\n"+board[2]+
-		"\n\n"+player2+":\nUnplayed Pawns: "+p2Unplayed+"		Pawns in goal:"+p2Goal
-	);
 
 
-
-alert(boardUi);
-//variable for win condition made
-	//var GameOver = "NotYetAssigned";
-	//console.log(GameOver);
-	console.log(p1Playing.length)
-	console.log(p2Playing.length)
-
-	
 //The WIN CONDITION beeing "GameOver = isOver", that will be included in the for loop making the game go on.
 function winCheck(){
 	if((p1Goal.length || p2Goal.length) == pawnLoc1.length){
@@ -226,6 +231,12 @@ function winCheck(){
 	}
 }
 
+alert(boardUi);
+//variable for win condition made
+	//var GameOver = "NotYetAssigned";
+	//console.log(GameOver);
+	console.log(p1Playing.length)
+	console.log(p2Playing.length)
 
 
 
