@@ -37,3 +37,6 @@ also added a function to se if the move the player want to do is valid as well a
 **20 hours in**
 
 **21-11-18** changed the board UI variable to be a function that can be called upon for to update.
+
+reduced the lines of code for the roll funciton. Instead of having lots of different dice, U just made it repeat a roll and add it to the final result. Much more efficient and super simple to change amount of die if I would desire to do so by simply chaining just one number. Since the dice arent used anywhere else there was no point int having them as separate variables.
+**20:15 hrs in**
