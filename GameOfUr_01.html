@@ -31,32 +31,17 @@ var move = "stay"
 				order = 1
 			}
 		}
-/*
-//the DICE setup, and the random generator function
-	var die1 = 0
-	var die2 = 0
-	var die3 = 0
-	var die4 = 0
-	var result = die1+die2+die3+die4
-	function roll(){
-		die1 = Math.round(Math.random())
-		//console.log("First die rolled "+die1)
-		die2 = Math.round(Math.random())
-		//console.log("Second die rolled "+die2)
-		die3 = Math.round(Math.random())
-		//console.log("Third die rolled "+die3)
-		die4 = Math.round(Math.random())
-		//console.log("Fourth die rolled "+die4)
-		result = (die1+die2+die3+die4)
-		//console.log("For a total of "+(die1+die2+die3+die4))
-}
-*/
+
+//theDice Roll function.
 function roll(){
+	//resetting the result first.
 	result = 0
-	for(var die = 4;die>0;die--){
+	//four dice are rolled, so, repeat 4 times.
+	for(var die = 1;die<5;die++){
 		result += Math.round(Math.random())
-		console.log(result)
+		//console.log("After "+die+ " rolls the result is "+result)
 	}
+	console.log(result);
 }
 
 
@@ -236,10 +221,13 @@ function movePawn(){
 	
 	for(move ;move != "move";move){
 		//User(hopefully) picks a pawn. 
-		currentPawn = parseInt(prompt(player +" rolled "+ result+"!\nPlease pick a pawn to move "+result+" steps!\n\n"+ getUI()));
+		currentPawn = parseInt(prompt("Enter '9' to read the rules\n"+player +" rolled "+ result+"!\nPlease pick a pawn to move "+result+" steps!\n\n"+ getUI()));
 		//If the player doesn't pick a pawn.
 		if (Boolean(currentPawn) == false){
 			alert("Please pick a pawn!(ง •̀_•́)ง");
+		}
+		else if(currentPawn == 9){
+			alert(rules);
 		}
 		//If the player choose a pawn above how many pawns the player has. Chose to make it pawnLoc1.length in case I add more pawns later on. I use pawnLoc1, but both players should have sama amount of pawns
 		else if (currentPawn > pawnLoc1.length){
@@ -281,11 +269,16 @@ function findSquare(SqUI){
 function updUI(){
 	var row = 0
 	var column = 0
-	
+	//if to location is >=5 adn <=14 both pawns can move here. So, it doesen't matter which player it is.
 	if(toLocation >=5 && toLocation<=12){
 		row = 2
 		column = toLocation-5
 	}
+	else if(toLocation > 14){
+		return
+	}
+	//If the location is not on one of the square both players can be on, then execute this part
+	//and identify which row and column should be replaced with what "graphics"
 	else if(player == player1){
 		if(toLocation <=4){
 			row = 0
@@ -293,7 +286,8 @@ function updUI(){
 		}
 		else{
 			row = 3
-			column = tolocation-12
+			//the toLocation is waay higher than the actual lenght of the row, so I just reduce the toLocation by 14.
+			column = toLocation-14
 		}
 	}
 	else{//player == player 2
@@ -303,10 +297,9 @@ function updUI(){
 		}
 		else{
 			row = 4
-			column = tolocation-12
+			column = toLocation-14
 		}
 	}
-	
 	//Finally replaces the UI
 	board3[row][column] = thePawn
 }
@@ -328,12 +321,7 @@ function winCheck(){
 	}
 }
 
-alert(getUI());
-//variable for win condition made
-	//var GameOver = "NotYetAssigned";
-	//console.log(GameOver);
-	console.log(p1Playing.length)
-	console.log(p2Playing.length)
+//alert(getUI());
 
 
 
@@ -342,7 +330,7 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	//Dediding who's turn it is 
 	turnOrder();
 	//Telling the player whos turn it is.
-	alert("It is currently "+ player +" turn!\n Pres 'OK' to roll the Dice!\n\n"+getUI());
+	alert("It is currently "+ player +" turn!\n Pres 'OK' to roll the Dice!");
 	//Re-rolling the dice to be used to make the move.
 	roll();
 
