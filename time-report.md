@@ -40,4 +40,5 @@ also added a function to se if the move the player want to do is valid as well a
 
 reduced the lines of code for the roll funciton. Instead of having lots of different dice, U just made it repeat a roll and add it to the final result. Much more efficient and super simple to change amount of die if I would desire to do so by simply chaining just one number. Since the dice arent used anywhere else there was no point int having them as separate variables.
 added an option to show rules when picking a pawn to move.
-**20:30 hrs in**
+The board UI updates when pawns moves across the board, and removes old grapgics when moving
+**21:00 hrs in**
