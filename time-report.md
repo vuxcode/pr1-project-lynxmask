@@ -23,12 +23,17 @@ added move function. This doesn't do anything as of yet, since it is(will) be de
 **12 hrs in**
 
 **2021-11-05** Updated and fixed some issues regarding the movePawn and pickPawn functions.
-
+**12½ hrs in**
 
 **21-11-15** changed so that Instead of having one array representing all pawns, I decided to makit two separate arrays, one for each player. It'll be easier to compare whos pawn it is aswell as easier to iterate and add pawns later on.
+**14 hrs in**
 
 **21-11-16** Made the code better for iteration. Instead of hard coding numbers, I've tried to make it based on numbers of pawns for example. So, alot of code wont have to be changed later on if I decide to update how many pawns I have in the game. Made some code more efficient as well.
 
 also added a function to se if the move the player want to do is valid as well as executing the move (not shown in UI as of yet.). Some variables changed to be global for use else -where. 
+**16 hrs in**
 
-**21-11-17** made a function that can find ouy what "graphics" to be used dependent on what pawn was moved.
+**21-11-17** made a function that can find ouy what "graphics" to be used dependent on what pawn was moved. Aso ALOT of experimenting and trying to figure out how to update the UI. Alot of sitting in the sofa just trying to think how I want to approach the problem.
+**20 hours in**
+
+**21-11-18** changed the board UI variable to be a function that can be called upon for to update.
