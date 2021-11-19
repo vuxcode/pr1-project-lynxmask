@@ -42,3 +42,7 @@ reduced the lines of code for the roll funciton. Instead of having lots of diffe
 added an option to show rules when picking a pawn to move.
 The board UI updates when pawns moves across the board, and removes old grapgics when moving
 **21:00 hrs in**
+
+**21-11-19**
+
+**22:30 hrs in**
