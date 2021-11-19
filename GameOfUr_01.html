@@ -93,9 +93,9 @@ document.write(rules2);
 //Lets make the first pawn(S)
 	//Player 1 pawn status
 
-	var p1p1 = "X₁";
-	var p1p2 = "X₂";
-	var p1p3 = "X₃";
+	var p1p1 = "[X₁]";
+	var p1p2 = "[X₂]";
+	var p1p3 = "[X₃]";
 	//Putting the pawn "graphics" into an array
 	var p1Pawns = ["[X₁]","[X₂]","[X₃]"];
 	//Panws not yet played
@@ -286,7 +286,6 @@ function updUI(){
 			}
 		}
 		//Finally replaces the UI
-		console.log("test 1")
 		//first, add the pawn, reduce replacer with amount of step taken to identify which square it left.
 		if(loop == 0){
 			board3[row][column] = thePawn
@@ -299,6 +298,37 @@ function updUI(){
 	}
 }
 
+//If a pawn is knocked of the board, when pawnLoc need to be reset.
+function knockOutPawn(){
+	
+	//for loop checking the length of the pawnLoc1 to base how many checks the program have to do based on amount of pawn
+	for(var loop = 0 ;loop < pawnLoc1.length ;loop++){
+		if(player == player1){
+			//Lots of conditions to check if the pawn can, ans will be knocked out. 
+			//the square has to be >= 5 and <=13, because the other squares are safe. And a pawn have to land on the same square(defined by pawnLoc.)
+			if(pawnLoc2[loop] == toLocation && pawnLoc2[loop] >= 5 && pawnLoc2[loop]  <= 13){
+				//console.log(thePawn+" goes to square "+toLocation+" and " + pawnLoc[loop]+" is reset to 0!")
+				//reset the pawn to 0
+				pawnLoc2[loop] = 0
+				//only one pawn can be knocked out at the time, so, stop the script.
+				return
+			}
+			else{
+			console.log("No pawn was knocked out..")
+			}
+		}
+		else{//if player == player2
+			if(pawnLoc1[loop] == toLocation && pawnLoc1[loop] >= 5 && pawnLoc1[loop] <= 13){
+				//console.log(thePawn+" goes to square "+toLocation+" and " + pawnLoc1[loop]+" is reset to 0!")
+				pawnLoc1[loop] = 0
+				return
+			}
+			else{
+				console.log("No pawn was knocked out..")
+			}
+		}
+	}
+}
 
 //Function to reset some values that need resetting each turn. Not sure if all needed, but there as a failsafe.
 function reset(){
@@ -347,6 +377,11 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	//Update UI using above variables. thePawn and toLocation
 	if(result != 0){
 		updUI();
+		//reset the pawnLoc if it is knocked out.
+		knockOutPawn();
+		//test
+		console.log("Player 1 array is "+pawnLoc1)
+		console.log("Player 2 array is "+pawnLoc2)
 	}
 	
 
