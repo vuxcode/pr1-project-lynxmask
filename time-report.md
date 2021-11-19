@@ -44,5 +44,7 @@ The board UI updates when pawns moves across the board, and removes old grapgics
 **21:00 hrs in**
 
 **21-11-19**
+added a function, knockOutPawn to reset the pawns location to 0, if the pawn is knocked out by an opposite pawn.
 
-**22:30 hrs in**
+the win check is drastically changed. Instead of making an array with played pawns and check that array, the program just checks how many of the pawn has taken more than 14 steps, and if there is an equal amount to the pawnLoc.1lenght, then a player win!
+**24 hrs in**
