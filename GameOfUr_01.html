@@ -100,8 +100,6 @@ document.write(rules2);
 	var p1Pawns = ["[X₁]","[X₂]","[X₃]"];
 	//Panws not yet played
 	var p1Unplayed = [p1p1,p1p2,p1p3];
-	//Pawns on the board
-	var p1Playing = [];
 	//Pawns that has entered goal.
 	var p1Goal = [];
 
@@ -112,7 +110,6 @@ document.write(rules2);
 	var p2p3 = "O₃";
 	var p2Pawns = ["[O₁]","[O₂]","[O₃]"];
 	var p2Unplayed = [p2p1,p2p2,p2p3];
-	var p2Playing = [];
 	var p2Goal = [];
 
 	var pawnLoc1 = [0,0,0];
@@ -127,6 +124,10 @@ function updPawnArr(){
 	if(player == player1){
 		if(toLocation > 14){
 			p1Goal.push(thePawn)
+		}
+		if(pawnLoc1[currentPawn -1] == 0){
+			p1Unplayed.remove(currentPawn-1)
+			console.log("does this happen?")
 		}
 	}
 	else{//if player == player2
@@ -349,13 +350,13 @@ function reset(){
 
 //The WIN CONDITION beeing "GameOver = isOver", that will be included in the for loop making the game go on.
 function winCheck(){
-	if((p1Goal.length || p2Goal.length) == pawnLoc1.length){
+	if(p1Goal.length == pawnLoc1.length || p2Goal.length == pawnLoc2.length){
 		GameOver = "isOver"
+		alert(player +" has all pawns in goal!!!\n"+player+" wins! CONGRATULATIONS!");
 	}
 	else{
 		GameOver = "notOver"
 	}
-	
 }
 
 //alert(getUI());
@@ -403,7 +404,7 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	reset();
 
 	//Check if pawns are in goal
-	//winCheck();
+	winCheck();
 
 	//Status of the game
 	console.log(GameOver)
