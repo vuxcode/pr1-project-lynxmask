@@ -8,3 +8,5 @@
 2. When pleayer 2 pawns are leaving the board by enter goal, old graphic stays. Need to see what is causing this.  STILL AN ISSUE
 
 3.Some times when a player rolls a 0, the graphics on the board dissappear, probably since the pawn did not move, and the program looks if there is a pawn on last active pawns toLovation, and hence removing said pawn. Soved by putting thePawn variable and toLocation updating functions if the roll is not 0
+
+4. The graphic wont update when the pawn has moved 13 or 14 steps. This was caused by subtracting 14 from the pawns moved steps to find the correlating number in the array, this was causing the updUI function to "update outside the array". Solved by dubtracting 13 from the roll instead. so that 14 steps become index 1 in the array, and 13 steps becoming index 0 in the array.
