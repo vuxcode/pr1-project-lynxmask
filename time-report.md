@@ -48,3 +48,5 @@ added a function, knockOutPawn to reset the pawns location to 0, if the pawn is 
 
 the win check is drastically changed. Instead of making an array with played pawns and check that array, the program just checks how many of the pawn has taken more than 14 steps, and if there is an equal amount to the pawnLoc.1lenght, then a player win!
 **24 hrs in**
+
+**21-11-23** Fixed alot bugs in the updUI causing it to not update properly when pawns were on the last 2 squares and above. Tweaking the win check function to work properly so that you can actually win! The game is more or less playable! Now I just need to fix some UI element to make it be clear.
