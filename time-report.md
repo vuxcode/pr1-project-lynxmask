@@ -50,3 +50,4 @@ the win check is drastically changed. Instead of making an array with played paw
 **24 hrs in**
 
 **21-11-23** Fixed alot bugs in the updUI causing it to not update properly when pawns were on the last 2 squares and above. Tweaking the win check function to work properly so that you can actually win! The game is more or less playable! Now I just need to fix some UI element to make it be clear.
+**26.30 hrs in**
