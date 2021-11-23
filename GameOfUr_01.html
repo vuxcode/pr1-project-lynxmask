@@ -114,11 +114,7 @@ document.write(rules2);
 	var p2Unplayed = [p2p1,p2p2,p2p3];
 	var p2Playing = [];
 	var p2Goal = [];
-	/*
-	Array deciding players pawn location. Each one corresponding a player pawn. pawnLoc for pawnLocation
-	PawnLoc[0] beeing player 1 pawn 1. PawnLoc[1] beeing player 1 pawn 2 and so on.
-	Make 2 arrays one for each player. So that I can compare arrays, and increase the number of pawns.
-	*/
+
 	var pawnLoc1 = [0,0,0];
 	var pawnLoc2 = [0,0,0];
 	var currentPawn = 0
@@ -126,8 +122,22 @@ document.write(rules2);
 	var thePawn = "Target pawn not yet Assigned";
 	var toLocation = "Target square not yet assigned";
 
+//Function to update if pawn is in play, or off the board.
+function updPawnArr(){
+	if(player == player1){
+		if(toLocation > 14){
+			p1Goal.push(thePawn)
+		}
+	}
+	else{//if player == player2
+		if(toLocation > 14){
+			p2Goal.push(thePawn)
+		}
+	}
+}
 
-//this is currently what Im working with.
+
+//The board matrix
 var board = [
 [eSq,eSq,eSq,eSq,],//Player1 first 4 
 [eSq,eSq,eSq,eSq,],//player2 first 4
@@ -164,7 +174,7 @@ function validateMove(){
 			alert(goalMsg);
 		}
 		//Or have another pawn at the location. Need to make sure it still
-		else if(pawnLoc1.includes(pawnLoc1[currentPawn-1]+result)){
+		else if(pawnLoc1.includes(pawnLoc1[currentPawn-1]+result && pawnLoc1[currentPawn-1]+result <=15)){
 			alert(occupiedMsg);1
 		}
 		else{
@@ -177,7 +187,7 @@ function validateMove(){
 		if(pawnLoc2[(currentPawn-1)] >= 15){
 			alert(goalMsg);
 		}
-		else if(pawnLoc2.includes(pawnLoc2[currentPawn-1]+result)){
+		else if(pawnLoc2.includes(pawnLoc2[currentPawn-1]+result && pawnLoc2[currentPawn-1]+result <=15)){
 			alert(occupiedMsg)
 		}
 		else{
@@ -282,15 +292,12 @@ function updUI(){
 		}
 		//If the pawn is still on the board, add the graphic for it on the board.
 		else if(loop == 0 && localToLocation <= 14){
-			alert("replacing the boards row "+ row + " and column "+ column)
 			board[row][column] = thePawn
 			localToLocation -= result
-			console.log("This is 1:st loop")
 		}
 		//when old square found, replace with an epmty square!
 		else if(loop == 1){
 			board[row][column] = eSq
-			console.log("this is the 2:nd loop")
 		}
 		else{
 			alert("Successs!!!!!!!!!?")
@@ -336,38 +343,19 @@ function reset(){
 	currentPawn = 0
 }
 
+
+
+
+
 //The WIN CONDITION beeing "GameOver = isOver", that will be included in the for loop making the game go on.
 function winCheck(){
-	var p1InGoal = 0
-	var p2InGoal = 0
-	for(var win=0 ;win < pawnLoc1.length; win++){
-		if(pawnLoc1[win] > 14){
-			p1InGoal++
-			console.log("p1 In Goal is "+p1InGoal)
-		}
-		else if(pawnLoc2[win] > 14){
-			p2InGoal++
-			console.log("p2 in goal is "+ p2InGoal)
-		}
-		else{
-			console.log("No goalcheck added")
-		}
-	}
-	
-	if(p1InGoal ||p2InGoal == pawnLoc1.length){
-		GameOver = "isOver"
-	}
-	else{
-		GameOver = "NotOver"
-	}
-	/*
 	if((p1Goal.length || p2Goal.length) == pawnLoc1.length){
 		GameOver = "isOver"
 	}
 	else{
 		GameOver = "notOver"
 	}
-	*/
+	
 }
 
 //alert(getUI());
@@ -382,8 +370,8 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	alert("It is currently "+ player +" turn!\n Pres 'OK' to roll the Dice!");
 	//Re-rolling the dice to be used to make the move.
 	roll();
-	//test roll updater to not have to roll the dice everytime.
-	//result = parseInt(prompt(player +" custome dice number\n\n"+getUI()));
+	//FOR TEST ONLY; Get desired roll to move pawns for testing vaious things.
+	result = parseInt(prompt(player +" custome dice number\n\n"+getUI()));
 
 	if(result == 0){
 		//If player rolls a 0, no move can be made, and it is the next players turn to roll
@@ -400,6 +388,7 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 		//Find what pawn is beeing moved and the square to replace.
 		thePawn = getPawn(thePawn);
 		toLocation = findSquare(toLocation);
+		updPawnArr();
 		updUI();
 		//reset the pawn location by resetting knockt out by resetting the pawnLoc to 0
 		knockOutPawn();
