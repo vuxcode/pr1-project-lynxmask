@@ -141,9 +141,9 @@ var board = [
 function getUI(){
 	return player1+":\nUnplayed Pawns: "+p1Unplayed +"	Pawns in goal:"+p1Goal+" \n\n"+
 
-	board[0][3]+board[0][2]+board[0][1]+board[0][0]+" _____"+board[3][0]+board[3][1]+
+	board[0][3]+board[0][2]+board[0][1]+board[0][0]+" _____"+board[3][1]+board[3][0]+
 	"\n"+board[2][0]+board[2][1]+board[2][2]+board[2][3]+board[2][4]+board[2][5]+board[2][6]+board[2][7]+"\n"+
-	board[1][3]+board[1][2]+board[1][1]+board[1][0]+" ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ " +board[4][0]+board[4][1]+
+	board[1][3]+board[1][2]+board[1][1]+board[1][0]+" ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ " +board[4][1]+board[4][0]+
 
 	"\n\n"+player2+":\nUnplayed Pawns: "+p2Unplayed+"		Pawns in goal:"+p2Goal
 }
@@ -251,7 +251,7 @@ function updUI(){
 		}
 		else if(replacer > 14){
 			replacer -= result
-			return
+			
 		}
 		//If the location is not on one of the square both players can be on, then execute this part
 		//and identify which row and column should be replaced with what "graphics"
@@ -263,7 +263,7 @@ function updUI(){
 			else{
 				row = 3
 				//the toLocation is waay higher than the actual lenght of the row, so I just reduce the replacer by 14.
-				column = replacer-14
+				column = replacer-13
 			}
 		}
 		else{//player == player 2
@@ -273,7 +273,7 @@ function updUI(){
 			}
 			else{
 				row = 4
-				column = replacer-14
+				column = replacer-13
 			}
 		}
 		//Finally replaces the UI
@@ -281,10 +281,12 @@ function updUI(){
 		if(loop == 0){
 			board[row][column] = thePawn
 			replacer -= result
+			console.log("This is 1:st loop")
 		}
 		//when old square found, replace with an epmty square!
 		else if(loop == 1){
 			board[row][column] = eSq
+			console.log("this is the 2:nd loop")
 		}
 	}
 }
@@ -370,6 +372,8 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	alert("It is currently "+ player +" turn!\n Pres 'OK' to roll the Dice!");
 	//Re-rolling the dice to be used to make the move.
 	roll();
+	//test roll updater
+	result = parseInt(prompt(player +" custome dice number\n\n"+getUI()));
 
 	if(result == 0){
 		//If player rolls a 0, no move can be made, and it is the next players turn to roll
@@ -404,7 +408,7 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 	reset();
 
 	//Check if pawns are in goal
-	winCheck();
+	//winCheck();
 
 	//Status of the game
 	console.log(GameOver)
@@ -413,7 +417,6 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 alert("Game Over!");
 
 </script>
-
 
 
 
