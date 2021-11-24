@@ -14,3 +14,5 @@
 5.Small error in knockOutPawn made pawns knock out the opposite pawn if both had taken 13 steps even though they're safe squares. This was caused by the function looking if the pawnLoc were less or equal to 13 where as it should be 12. Changed the number to 12 and it works.
 
 6. The function updUI() replaced board[0][0] with the pawn that had entered goal with that pawns graphic. This was caused by the function having that as active square to replace with the active pawns graphic. By adding row 278, looking of the pawn has entered goal and then just simply not update it evnen tough the square is still "targeted".
+
+7. The validate move did not work as intended. When inplementing new condition I did by accident remove a ")" to the end instead of aftyer the first condition separating the 2 different conditions. This made the program check 'god knows what' to be true.. Fixed be adjusting the ")".
