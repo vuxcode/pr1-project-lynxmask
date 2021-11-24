@@ -136,7 +136,49 @@ function updPawnArr(){
 		}
 	}
 }
+//Function to remove pawns from the unplayed array.
+function remUnplayed(){
+	var arr = 0
+	//variable deciding what inxex to remove from array based on chosen pawn.
+	var remInd = currentPawn - 1
+	//Updating arr depending on the player.
+	if(player == player1){
+		arr = p1Unplayed.length
+		console.log("arr is now set to be "+p1Unplayed.length)
+	}
+	else{//player == player2
+		arr = p2Unplayed.length
+		console.log("arr is now set to be "+p2Unplayed.length)
+	}
+	//Local variable defining what index to remove.
+	
 
+	console.log("We want to remove index "+remInd)
+
+	for(var loop = remInd; loop < arr-1; loop++){
+		if(player == player1){
+			p1Unplayed[loop] = p1Unplayed[loop+1]			
+		}
+		else{//player == player2
+			p2Unplayed[loop] = p2Unplayed[loop+1]			
+		}
+	}
+	if(player == player1 && pawnLoc1.length > 0){
+		p1Unplayed.pop()
+	}
+	else if(player == player2 && pawnLoc2.length > 0){
+		p2Unplayed.pop()
+	}
+	else{
+		console.log("Nothing needed to be poped.")
+	}
+
+
+
+
+
+
+}
 
 //The board matrix
 var board = [
@@ -167,6 +209,7 @@ var occupiedMsg = "This square is already occupied by one of your pawns!\n "+ pl
 
 //Function to validate and execute the players move.  validates if the pawn is in play and not trying to move to an occupied square.
 function validateMove(){
+	console.log("Is this even being played?")
 	//player ones validation
 	console.log("CurrentPawn is " + currentPawn);
 	if(player == player1){
@@ -175,25 +218,29 @@ function validateMove(){
 			alert(goalMsg);
 		}
 		//Or have another pawn at the location. Need to make sure it still
-		else if(pawnLoc1.includes(pawnLoc1[currentPawn-1]+result && pawnLoc1[currentPawn-1]+result <=15)){
+		else if(pawnLoc1.includes(pawnLoc1[currentPawn-1]+result) && pawnLoc1[currentPawn-1]+result <=15){
 			alert(occupiedMsg);1
+			console.log("player 1 is occupying this square")
 		}
 		else{
 			//if the move is valid, move the pawn, and end the loop.
 			pawnLoc1[(currentPawn-1)] += result
 			move = "move"
+			console.log("Why here player 1")
 		}
 	}
 	else{//player == player2
 		if(pawnLoc2[(currentPawn-1)] >= 15){
 			alert(goalMsg);
 		}
-		else if(pawnLoc2.includes(pawnLoc2[currentPawn-1]+result && pawnLoc2[currentPawn-1]+result <=15)){
+		else if(pawnLoc2.includes(pawnLoc2[currentPawn-1]+result) && pawnLoc2[currentPawn-1]+result <=15){
 			alert(occupiedMsg)
+			console.log("Player 2 is occupying this square")
 		}
 		else{
 			pawnLoc2[(currentPawn-1)] += result
 			move = "move"
+			console.log("Why here player 2")
 		}
 	}
 }
@@ -220,8 +267,8 @@ function movePawn(){
 			validateMove();
 		}
 	}
-	//console.log("Player one array " + pawnLoc1);
-	//console.log("Player two array " + pawnLoc2);
+	console.log("Player one array " + pawnLoc1);
+	console.log("Player two array " + pawnLoc2);
 }
 
 //Function getPawn and findSquare to get the pawn UI depending on user choise. And I get to try the return function! ¯\_(ツ)_/¯
@@ -389,6 +436,8 @@ for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
 		//Find what pawn is beeing moved and the square to replace.
 		thePawn = getPawn(thePawn);
 		toLocation = findSquare(toLocation);
+		
+	
 		updPawnArr();
 		updUI();
 		//reset the pawn location by resetting knockt out by resetting the pawnLoc to 0
