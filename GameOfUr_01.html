@@ -1,0 +1,468 @@
+﻿<script>
+
+//These two rows just for development purpose...
+var player1 = "Player one"
+var player2 = "Player two"
+//Made a variable to check if player is is trying to make a valid move.
+var move = "stay"
+/* hiding this part for the moment so I wont have to go trough with this every test
+//Player set up	
+
+	for(var player1;Boolean(player1)== 0;player1){
+		var player1 = prompt("Enter name of player one");
+	}
+	for(var player2;Boolean(player2)==0;player2){
+		var player2 = prompt("Enter name of player two");
+	}
+*/
+//Turn order made
+	var turn = 0
+	//order can be used as a variable for variables to get a number correlating to a player
+	var order = 0
+	var player = "Not Yet assigned";
+		function turnOrder(){
+			turn ++
+			if(turn % 2 == 0){
+				player = player2
+				order = 0
+			}
+			else{
+				player = player1
+				order = 1
+			}
+		}
+
+//theDice Roll function.
+function roll(){
+	//resetting the result first.
+	result = 0
+	//four dice are rolled, so, repeat 4 times.
+	for(var die = 1;die<5;die++){
+		result += Math.round(Math.random())
+		//console.log("After "+die+ " rolls the result is "+result)
+	}
+	console.log(result);
+}
+
+
+//No code in this part. Just rules
+//Explanation off the rules
+	var rules = "The Rules for 'Game of Ur'!\nTo access the rules again, enter 'rules' on your turn!\n\nEach Player has 3 pawns each.\nThe first player to get all pawns from start to finnish wins!\n\n"+
+		"You each roll 4 dice that can each show a 1 or 0 and you are allowed to move the combined amount.\n"+
+		"That means you can get everything from 0 to 4 steps! All steps need to be taken by one pawn each turn.\n"+
+		"If your pawn land on the same pawn as the other players pawn, that pawn is knocked off the board and has to start from the beginning!\n\n"+
+		player1+" starts at 1 on the top row at 1,2... and goes off the board at ...13,14\n"+
+		player2+" does the same but on the bottom row.\n"+
+		"This means you're not safe on the middle row, i.e square 5 to 12!\n\nThe board:\n"+
+
+		"\n{4}[3][2][1]<-___{14}[13]----->"+player1+" pawns are X₁,X₂...\n"+
+		    "[5][6][7]{8}[9][10][11][12]\n"+
+		    "{4}[3][2][1]<- ͞ ͞ ͞ ͞ ͞{14}[13]----->"+player2+" pawns are O₁,O₂..."
+		//A secondary set of rules that can be used in the background
+	var rules2 = "The Rules for 'Game of Ur'!<br>To access the rules again, enter 'rules' on your turn!<br><br>Each Player has 3 pawns each.<br>The first player to get all pawns from start to finnish wins!<br><br>"+
+		"You each roll 4 dice that can each show a 1 or 0 and you are allowed to move the combined amount.<br>"+
+		"That means you can get everything from 0 to 4 steps! All steps need to be taken by one pawn each turn.<br>"+
+		"If your pawn land on the same pawn as the other players pawn, that pawn is knocked off the board and has to start from the beginning!<br><br>"+
+		player1+" starts at 1 on the top row at 1,2... and goes off the board at ...13,14<br>"+
+		player2+" does the same but on the bottom row.<br>"+
+		"This means you're not safe on the middle row, i.e square 5 to 12!<br><br>The board:<br>"+
+
+		"<br>{4}[3][2][1]<-___{14}[13]----->"+player1+" pawns are X₁,X₂...<br>"+
+		    "[5][6][7]{8}[9][10][11][12]<br>"+
+		    "{4}[3][2][1]<- ͞ ͞ ͞ ͞ ͞{14}[13]----->"+player2+" pawns are O₁,O₂..."
+			 
+
+		
+
+
+
+alert(rules);
+document.write(rules2);
+//game board
+	//No Square bottom
+	var noSqb = "___";
+	//NoSquare top
+	var noSqt = " ͞ ͞ ͞ ͞ ͞"
+	//empty board square
+	var eSq = "[  ]";
+	//"empty flower empty square"
+	var feSq = "{  }"
+	var startSq = "<-"
+
+
+//Lets make the first pawn(S)
+	//Player 1 pawn status
+
+	var p1p1 = "X₁";
+	var p1p2 = "X₂";
+	var p1p3 = "X₃";
+	//Putting the pawn "graphics" into an array
+	var p1Pawns = ["[X₁]","[X₂]","[X₃]"];
+	//Panws not yet played
+	var p1Unplayed = [p1p1,p1p2,p1p3];
+	//Pawns that has entered goal.
+	var p1Goal = [];
+
+	//player 2 pawn status
+	
+	var p2p1 = "O₁";
+	var p2p2 = "O₂"	;
+	var p2p3 = "O₃";
+	var p2Pawns = ["[O₁]","[O₂]","[O₃]"];
+	var p2Unplayed = [p2p1,p2p2,p2p3];
+	var p2Goal = [];
+
+	var pawnLoc1 = [0,0,0];
+	var pawnLoc2 = [0,0,0];
+	var currentPawn = 0
+	//Variables i can use with a return value later.
+	var thePawn = "Target pawn not yet Assigned";
+	var toLocation = "Target square not yet assigned";
+
+//Function to update if pawn is in play, or off the board.
+function updPawnArr(){
+	if(player == player1){
+		if(toLocation > 14){
+			p1Goal.push(thePawn)
+		}
+		if(pawnLoc1[currentPawn -1] == 0){
+			p1Unplayed.remove(currentPawn-1)
+			console.log("does this happen?")
+		}
+	}
+	else{//if player == player2
+		if(toLocation > 14){
+			p2Goal.push(thePawn)
+		}
+	}
+}
+//Function to remove pawns from the unplayed array.
+function remUnplayed(){
+	var arr = 0
+	//variable deciding what inxex to remove from array based on chosen pawn.
+	var remInd = currentPawn - 1
+	//Updating arr depending on the player.
+	if(player == player1){
+		arr = p1Unplayed.length
+		console.log("arr is now set to be "+p1Unplayed.length)
+	}
+	else{//player == player2
+		arr = p2Unplayed.length
+		console.log("arr is now set to be "+p2Unplayed.length)
+	}
+	//Local variable defining what index to remove.
+	
+
+	console.log("We want to remove index "+remInd)
+
+	for(var loop = remInd; loop < arr-1; loop++){
+		if(player == player1){
+			p1Unplayed[loop] = p1Unplayed[loop+1]			
+		}
+		else{//player == player2
+			p2Unplayed[loop] = p2Unplayed[loop+1]			
+		}
+	}
+	if(player == player1 && pawnLoc1.length > 0){
+		p1Unplayed.pop()
+	}
+	else if(player == player2 && pawnLoc2.length > 0){
+		p2Unplayed.pop()
+	}
+	else{
+		console.log("Nothing needed to be poped.")
+	}
+
+
+
+
+
+
+}
+
+//The board matrix
+var board = [
+[eSq,eSq,eSq,eSq,],//Player1 first 4 
+[eSq,eSq,eSq,eSq,],//player2 first 4
+[eSq,eSq,eSq,eSq,eSq,eSq,eSq,eSq],//Main row
+[eSq,eSq,],//player1 last 2
+[eSq,eSq,]//player2 last 2
+];
+
+
+//Function for getting the UI to show the player(s)
+function getUI(){
+	return player1+":\nUnplayed Pawns: "+p1Unplayed +"	Pawns in goal:"+p1Goal+" \n\n"+
+
+	board[0][3]+board[0][2]+board[0][1]+board[0][0]+" _____"+board[3][1]+board[3][0]+
+	"\n"+board[2][0]+board[2][1]+board[2][2]+board[2][3]+board[2][4]+board[2][5]+board[2][6]+board[2][7]+"\n"+
+	board[1][3]+board[1][2]+board[1][1]+board[1][0]+" ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ " +board[4][1]+board[4][0]+
+
+	"\n\n"+player2+":\nUnplayed Pawns: "+p2Unplayed+"		Pawns in goal:"+p2Goal
+}
+
+
+//feedback to invalid moves for the player
+var goalMsg = "This pawn has already entered goal and cant pe moved any more!\n" + player + ", please pick another pawn!";
+var occupiedMsg = "This square is already occupied by one of your pawns!\n "+ player +", please pick another pawn!";
+
+
+//Function to validate and execute the players move.  validates if the pawn is in play and not trying to move to an occupied square.
+function validateMove(){
+	console.log("Is this even being played?")
+	//player ones validation
+	console.log("CurrentPawn is " + currentPawn);
+	if(player == player1){
+		//Need to make sure that the pawn isn't at goal.
+		if(pawnLoc1[currentPawn-1] >= 15){
+			alert(goalMsg);
+		}
+		//Or have another pawn at the location. Need to make sure it still
+		else if(pawnLoc1.includes(pawnLoc1[currentPawn-1]+result) && pawnLoc1[currentPawn-1]+result <=15){
+			alert(occupiedMsg);1
+			console.log("player 1 is occupying this square")
+		}
+		else{
+			//if the move is valid, move the pawn, and end the loop.
+			pawnLoc1[(currentPawn-1)] += result
+			move = "move"
+			console.log("Why here player 1")
+		}
+	}
+	else{//player == player2
+		if(pawnLoc2[(currentPawn-1)] >= 15){
+			alert(goalMsg);
+		}
+		else if(pawnLoc2.includes(pawnLoc2[currentPawn-1]+result) && pawnLoc2[currentPawn-1]+result <=15){
+			alert(occupiedMsg)
+			console.log("Player 2 is occupying this square")
+		}
+		else{
+			pawnLoc2[(currentPawn-1)] += result
+			move = "move"
+			console.log("Why here player 2")
+		}
+	}
+}
+
+//Further validation and move function.
+function movePawn(){
+	
+	for(move ;move != "move";move){
+		//User(hopefully) picks a pawn. 
+		currentPawn = parseInt(prompt(player +" rolled "+ result+"!\nPlease pick a pawn to move "+result+" steps!\n\n"+ getUI()+"\n\nEnter '9' to read the rules!"));
+		//If the player doesn't pick a pawn.
+		if (Boolean(currentPawn) == false){
+			alert("Please pick a pawn!(ง •̀_•́)ง");
+		}
+		else if(currentPawn == 9){
+			alert(rules);
+		}
+		//If the player choose a pawn above how many pawns the player has. Chose to make it pawnLoc1.length in case I add more pawns later on. I use pawnLoc1, but both players should have sama amount of pawns
+		else if (currentPawn > pawnLoc1.length){
+			alert("You dont have "+currentPawn+" pawns...");
+		}
+		//Validate the move.
+		else{
+			validateMove();
+		}
+	}
+	console.log("Player one array " + pawnLoc1);
+	console.log("Player two array " + pawnLoc2);
+}
+
+//Function getPawn and findSquare to get the pawn UI depending on user choise. And I get to try the return function! ¯\_(ツ)_/¯
+function getPawn(pawnUI){
+		if(player == player1){
+			return pawnUI = p1Pawns[(currentPawn - 1)]
+		}
+		else{//player == player2
+			return pawnUI = p2Pawns[(currentPawn - 1)]
+		}
+}
+//Function to fin the square to replace with pawn UI.
+function findSquare(SqUI){
+		if(player == player1){
+			//Find the number that is on this location to get a number that can correlate with a square
+			return sqUI = pawnLoc1[currentPawn-1]
+		}
+		else{//player == player2
+			return sqUI = pawnLoc2[currentPawn-1]
+		}
+}
+
+//thePawn = getPawn(thePawn); Is the pawn GRAPHICS!
+//toLocation = findSquare(toLocation); Gives me the NUMMBER that will coorelate to a square!
+
+function updUI(){
+	var row = 0
+	var column = 0
+	//local variable so we can make a loop usince the toLocation value, but not change it
+	var localToLocation = toLocation
+	//since i have a search and replace tool, lets just loop it for both adding the graphics if the pawn, and remove it!
+	for(var loop = 0 ;loop <=1 ;loop++){
+		
+		//if to location is >=5 adn <=14 both pawns can move here. So, it doesen't matter which player it is.
+		if(localToLocation >=5 && localToLocation<=12){
+			row = 2
+			column = localToLocation-5
+		}
+		//If the location is not on one of the square both players can be on, then execute this part
+		//and identify which row and column should be replaced with what "graphics"
+		else if(player == player1){
+			if(localToLocation <=4){
+				row = 0
+				column = localToLocation-1
+			}
+			else{
+				row = 3
+				//the toLocation is waay higher than the actual lenght of the row, so I just reduce the localToLocation by 14.
+				column = localToLocation-13
+			}
+		}
+		else{//player == player 2
+			if(localToLocation<=4){
+				row = 1
+				column = localToLocation-1
+			}
+			else{
+				row = 4
+				column = localToLocation-13
+			}
+		}
+		
+		//Finally replaces the UI
+		//If the pawn is in goal, no pawn graphic has to be added. Since localToLocation - result never can be >= 14
+		//this of statement will never be true for the second loop when program is replacing previous square with the
+		//graphics of the empty sqare.
+		if(localToLocation >= 15){
+			localToLocation -= result
+		}
+		//If the pawn is still on the board, add the graphic for it on the board.
+		else if(loop == 0 && localToLocation <= 14){
+			board[row][column] = thePawn
+			localToLocation -= result
+		}
+		//when old square found, replace with an epmty square!
+		else if(loop == 1){
+			board[row][column] = eSq
+		}
+		else{
+			alert("Successs!!!!!!!!!?")
+		}
+	}
+}
+
+//If a pawn is knocked of the board, when pawnLoc need to be reset.
+function knockOutPawn(){
+	
+	//for loop checking the length of the pawnLoc1 to base how many checks the program have to do based on amount of pawn
+	for(var loop = 0 ;loop < pawnLoc1.length ;loop++){
+		if(player == player1){
+			//Lots of conditions to check if the pawn can, ans will be knocked out. 
+			//the square has to be >= 5 and <=13, because the other squares are safe. And a pawn have to land on the same square(defined by pawnLoc.)
+			if(pawnLoc2[loop] == toLocation && pawnLoc2[loop] >= 5 && pawnLoc2[loop]  <= 12){
+				//console.log(thePawn+" goes to square "+toLocation+" and " + pawnLoc[loop]+" is reset to 0!")
+				//reset the pawn to 0
+				pawnLoc2[loop] = 0
+				//only one pawn can be knocked out at the time, so, stop the script.
+				return
+			}
+			else{
+			console.log("No pawn was knocked out..")
+			}
+		}
+		else{//if player == player2
+			if(pawnLoc1[loop] == toLocation && pawnLoc1[loop] >= 5 && pawnLoc1[loop] <= 13){
+				//console.log(thePawn+" goes to square "+toLocation+" and " + pawnLoc1[loop]+" is reset to 0!")
+				pawnLoc1[loop] = 0
+				return
+			}
+			else{
+				console.log("No pawn was knocked out..")
+			}
+		}
+	}
+}
+
+//Function to reset some values that need resetting each turn. Not sure if all needed, but there as a failsafe.
+function reset(){
+	move = "stay"
+	currentPawn = 0
+}
+
+
+
+
+
+//The WIN CONDITION beeing "GameOver = isOver", that will be included in the for loop making the game go on.
+function winCheck(){
+	if(p1Goal.length == pawnLoc1.length || p2Goal.length == pawnLoc2.length){
+		GameOver = "isOver"
+		alert(player +" has all pawns in goal!!!\n"+player+" wins! CONGRATULATIONS!");
+	}
+	else{
+		GameOver = "notOver"
+	}
+}
+
+//alert(getUI());
+
+
+
+//The play loop, this is the GAMEPLAY GAMEPLAY GAMEPLAY GAMEPLAY!!!
+for(var GameOver = "NotYetAssigned";GameOver != "isOver";GameOver){
+	//Dediding who's turn it is 
+	turnOrder();
+	//Telling the player whos turn it is.
+	alert("It is currently "+ player +" turn!\n Pres 'OK' to roll the Dice!");
+	//Re-rolling the dice to be used to make the move.
+	roll();
+	//FOR TEST ONLY; Get desired roll to move pawns for testing vaious things.
+	result = parseInt(prompt(player +" custome dice number\n\n"+getUI()));
+
+	if(result == 0){
+		//If player rolls a 0, no move can be made, and it is the next players turn to roll
+		alert(player + " rolled a 0 and cant move on this turn...Better luck next time!");
+	}
+		//Otherwise, pick a pawn and move!
+	else{
+		movePawn();
+	}
+
+
+	//Update UI. This is only needed if a move is made i.e, player did not roll 0, hence, if result != 0
+	if(result != 0){
+		//Find what pawn is beeing moved and the square to replace.
+		thePawn = getPawn(thePawn);
+		toLocation = findSquare(toLocation);
+		
+	
+		updPawnArr();
+		updUI();
+		//reset the pawn location by resetting knockt out by resetting the pawnLoc to 0
+		knockOutPawn();
+		//test
+		//console.log("Player 1 array is "+pawnLoc1)
+		//console.log("Player 2 array is "+pawnLoc2)
+		alert(player +" moved pawn "+ thePawn + " to square "+ toLocation +"\n\n"+getUI());
+	}
+	
+
+	//reset some variables
+	reset();
+
+	//Check if pawns are in goal
+	winCheck();
+
+	//Status of the game
+	console.log(GameOver)
+}
+
+alert("Game Over!");
+
+</script>
+
+
+
+
